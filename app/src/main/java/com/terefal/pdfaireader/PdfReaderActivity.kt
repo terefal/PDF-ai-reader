@@ -3,6 +3,7 @@ package com.terefal.pdfaireader
 import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import com.github.barteksc.pdfviewer.PDFView
 
 class PdfReaderActivity : Activity() {
@@ -12,13 +13,16 @@ class PdfReaderActivity : Activity() {
         setContentView(R.layout.activity_pdf_reader)
 
         val pdfView: PDFView = findViewById(R.id.pdfView)
+        val pdfUri: Uri? = intent.getStringExtra("PDF_URI")?.let { Uri.parse(it) }
 
-        // Load a placeholder PDF (Update the file path as needed)
-        val pdfUri: Uri = Uri.parse("file:///android_asset/sample.pdf")
-        pdfView.fromUri(pdfUri)
-            .enableSwipe(true) // enables vertical scroll
-            .swipeHorizontal(false)
-            .enableDoubletap(true)
-            .load()
+        if (pdfUri != null) {
+            pdfView.fromUri(pdfUri)
+                .enableSwipe(true)
+                .swipeHorizontal(false)
+                .enableDoubletap(true)
+                .load()
+        } else {
+            Toast.makeText(this, "Unable to load PDF", Toast.LENGTH_SHORT).show()
+        }
     }
 }
