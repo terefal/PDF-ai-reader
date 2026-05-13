@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.terefal.pdfaireader.ai.AiProvider
 import com.terefal.pdfaireader.ai.AiProviderFactory
+import com.terefal.pdfaireader.ai.ChatImage
+import com.terefal.pdfaireader.ai.SearchAgent
 import com.terefal.pdfaireader.config.SettingsManager
 import com.terefal.pdfaireader.data.AppDatabase
 import com.terefal.pdfaireader.data.Note
@@ -30,6 +32,7 @@ class PdfReaderViewModel(application: Application) : AndroidViewModel(applicatio
     private var pdfUri: Uri? = null
     private var lastQuestion: String = ""
     private var lastAnswer: String = ""
+    var pendingImages: List<ChatImage> = emptyList()
 
     private val noteDao = AppDatabase.getInstance(application).noteDao()
 
@@ -51,7 +54,7 @@ class PdfReaderViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun queryAi(question: String) {
+    fun queryAi(question: String, images: List<ChatImage> = emptyList(), enableWebSearch: Boolean = false) {
         val provider = aiProvider
         if (provider == null) {
             _aiResponse.value = "[错误] AI Provider 未初始化，请先在设置中配置"
@@ -60,11 +63,24 @@ class PdfReaderViewModel(application: Application) : AndroidViewModel(applicatio
         if (question.isBlank()) return
 
         lastQuestion = question
+        pendingImages = emptyList()
         _isLoading.value = true
         viewModelScope.launch {
             try {
                 val context = _pdfContext.value ?: ""
-                val response = provider.askQuestion(context, question)
+                var webSearchContext = ""
+
+                if (enableWebSearch) {
+                    webSearchContext = SearchAgent.searchAndAugment(provider, question)
+                }
+
+                val response = provider.askQuestion(
+                    context = context,
+                    question = question,
+                    images = images,
+                    enableWebSearch = enableWebSearch,
+                    webSearchContext = webSearchContext
+                )
                 _aiResponse.value = response
                 lastAnswer = response
             } catch (e: Exception) {

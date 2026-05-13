@@ -14,14 +14,53 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <!-- 打开 AI 侧边栏按钮 -->
-        <Button
-            android:id="@+id/toggleAiButton"
+        <!-- 选择高亮层 (动态添加) -->
+        <FrameLayout
+            android:id="@+id/overlayContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- 底部工具按钮 -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
-            android:text="AI 助手" />
+            android:orientation="horizontal"
+            android:layout_margin="16dp">
+
+            <Button
+                android:id="@+id/toggleAiButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AI 助手"
+                android:textSize="12sp"
+                android:minWidth="0dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
+
+            <Button
+                android:id="@+id/circleSelectButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="圈画"
+                android:textSize="12sp"
+                android:minWidth="0dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_marginStart="4dp" />
+
+            <Button
+                android:id="@+id/annotateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="标注"
+                android:textSize="12sp"
+                android:minWidth="0dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_marginStart="4dp" />
+
+        </LinearLayout>
 
     </FrameLayout>
 
@@ -42,6 +81,30 @@
             android:textStyle="bold"
             android:gravity="center"
             android:padding="8dp" />
+
+        <!-- 联网搜索开关 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp">
+
+            <Switch
+                android:id="@+id/webSearchSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🌐 联网搜索"
+                android:textSize="12sp"
+                android:layout_marginStart="4dp" />
+
+        </LinearLayout>
 
         <!-- 对话历史 -->
         <ScrollView
@@ -73,6 +136,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="8dp">
+
+            <Button
+                android:id="@+id/imageButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:text="🖼"
+                android:textSize="18sp"
+                android:minWidth="0dp"
+                android:padding="0dp" />
 
             <EditText
                 android:id="@+id/questionInput"

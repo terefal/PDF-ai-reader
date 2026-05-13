@@ -1,0 +1,29 @@
+package com.terefal.pdfaireader.data
+
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface AnnotationDao {
+    @Query("SELECT * FROM annotations WHERE pdfUri = :pdfUri ORDER BY pageNumber, rectTop")
+    fun getAnnotationsForPdf(pdfUri: String): Flow<List<Annotation>>
+
+    @Query("SELECT * FROM annotations WHERE pdfUri = :pdfUri AND pageNumber = :pageNumber ORDER BY rectTop")
+    fun getAnnotationsForPage(pdfUri: String, pageNumber: Int): Flow<List<Annotation>>
+
+    @Insert
+    suspend fun insert(annotation: Annotation): Long
+
+    @Update
+    suspend fun update(annotation: Annotation)
+
+    @Delete
+    suspend fun delete(annotation: Annotation)
+
+    @Query("DELETE FROM annotations WHERE id = :id")
+    suspend fun deleteById(id: Long)
+}
