@@ -11,8 +11,7 @@ import java.net.URL
 open class OpenAiCompatProvider(
     override val providerType: ProviderType,
     private val baseUrl: String,
-    private val modelName: String,
-    private val useProxy: Boolean = false
+    private val modelName: String
 ) : AiProvider {
 
     protected var apiKey: String = ""
@@ -54,7 +53,7 @@ open class OpenAiCompatProvider(
             }
 
             connection.outputStream.use { os ->
-                os.write(body.toString().toByteArray())
+                os.write(body.toString().toByteArray(Charsets.UTF_8))
             }
 
             if (connection.responseCode != 200) {

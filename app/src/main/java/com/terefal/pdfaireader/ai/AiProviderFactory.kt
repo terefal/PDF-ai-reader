@@ -9,8 +9,7 @@ class AiProviderFactory {
                 ProviderType.OPENAI -> OpenAiCompatProvider(
                     providerType = ProviderType.OPENAI,
                     baseUrl = "https://api.openai.com/v1/",
-                    modelName = "gpt-3.5-turbo",
-                    useProxy = true
+                    modelName = "gpt-3.5-turbo"
                 )
                 ProviderType.OLLAMA -> OllamaProvider()
             }

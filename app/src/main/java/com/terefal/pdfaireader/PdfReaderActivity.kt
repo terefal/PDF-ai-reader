@@ -75,7 +75,7 @@ class PdfReaderActivity : AppCompatActivity() {
         findViewById<Button>(R.id.sendButton).setOnClickListener {
             val question = questionInput.text.toString().trim()
             if (question.isNotEmpty()) {
-                addChatBubble("你", question)
+                addUserBubble(question)
                 questionInput.text.clear()
                 viewModel.queryAi(question)
             }
@@ -99,13 +99,13 @@ class PdfReaderActivity : AppCompatActivity() {
         }
     }
 
-    private fun addChatBubble(sender: String, message: String) {
+    private fun addUserBubble(message: String) {
         val bubble = TextView(this).apply {
-            text = if (sender == "AI") message else "🧑 $message"
+            text = "🧑 $message"
             textSize = 14f
             setPadding(12, 8, 12, 8)
-            setTextColor(if (sender == "AI") Color.BLACK else Color.WHITE)
-            setBackgroundColor(if (sender == "AI") Color.parseColor("#E0E0E0") else Color.parseColor("#6200EE"))
+            setTextColor(Color.WHITE)
+            setBackgroundColor(Color.parseColor("#6200EE"))
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT

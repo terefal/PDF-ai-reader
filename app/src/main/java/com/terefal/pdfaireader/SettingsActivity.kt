@@ -1,4 +1,4 @@
-package com.terefal.pdfaireader.ai
+package com.terefal.pdfaireader
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,9 +9,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import com.terefal.pdfaireader.R
+import com.terefal.pdfaireader.ai.AiProviderFactory
+import com.terefal.pdfaireader.ai.ProviderType
 import com.terefal.pdfaireader.config.SettingsManager
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -70,7 +70,7 @@ class SettingsActivity : AppCompatActivity() {
         findViewById<Button>(R.id.testButton).setOnClickListener {
             statusText.text = "测试中..."
             val provider = AiProviderFactory.create(settings.currentProvider)
-            CoroutineScope(Dispatchers.Main).launch {
+            lifecycleScope.launch {
                 try {
                     withContext(Dispatchers.IO) { provider.initialize(settings.getApiKeyFor(settings.currentProvider)) }
                     val response = withContext(Dispatchers.IO) {

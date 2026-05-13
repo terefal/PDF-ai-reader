@@ -29,22 +29,4 @@ object PdfTextExtractor {
             "[PDF文本提取失败: ${e.message}]"
         }
     }
-
-    suspend fun extractPageText(contentResolver: ContentResolver, uri: Uri, page: Int): String = withContext(Dispatchers.IO) {
-        try {
-            contentResolver.openInputStream(uri)?.use { inputStream ->
-                PDDocument.load(inputStream).use { document ->
-                    if (page in 1..document.numberOfPages) {
-                        PDFTextStripper().apply {
-                            sortByPosition = true
-                            startPage = page
-                            endPage = page
-                        }.getText(document)
-                    } else ""
-                }
-            } ?: ""
-        } catch (e: Exception) {
-            "[PDF文本提取失败: ${e.message}]"
-        }
-    }
 }

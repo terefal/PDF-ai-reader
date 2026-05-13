@@ -27,7 +27,6 @@
 
     <!-- 右侧 AI 侧边栏 -->
     <LinearLayout
-        android:id="@+id/aiSidebar"
         android:layout_width="320dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"

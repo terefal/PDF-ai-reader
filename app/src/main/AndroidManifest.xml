@@ -15,7 +15,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".PdfReaderActivity" android:exported="false" />
-        <activity android:name=".ai.SettingsActivity" android:exported="false" />
+        <activity android:name=".SettingsActivity" android:exported="false" />
     </application>
 
 </manifest>
