@@ -36,7 +36,7 @@ class PdfReaderViewModel(application: Application) : AndroidViewModel(applicatio
     fun initProvider(settings: SettingsManager) {
         val providerType = settings.currentProvider
         val apiKey = settings.getApiKeyFor(providerType)
-        aiProvider = AiProviderFactory.create(providerType, apiKey)
+        aiProvider = AiProviderFactory.create(providerType)
         viewModelScope.launch {
             aiProvider?.initialize(apiKey)
         }

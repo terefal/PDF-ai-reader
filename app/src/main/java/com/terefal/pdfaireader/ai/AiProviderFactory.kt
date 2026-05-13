@@ -3,7 +3,7 @@ package com.terefal.pdfaireader.ai
 class AiProviderFactory {
 
     companion object {
-        fun create(type: ProviderType, apiKey: String): AiProvider {
+        fun create(type: ProviderType): AiProvider {
             return when (type) {
                 ProviderType.DEEPSEEK -> DeepSeekProvider()
                 ProviderType.OPENAI -> OpenAiCompatProvider(

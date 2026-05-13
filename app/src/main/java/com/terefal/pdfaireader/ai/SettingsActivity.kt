@@ -69,7 +69,7 @@ class SettingsActivity : AppCompatActivity() {
         // Test button
         findViewById<Button>(R.id.testButton).setOnClickListener {
             statusText.text = "测试中..."
-            val provider = AiProviderFactory.create(settings.currentProvider, settings.getApiKeyFor(settings.currentProvider))
+            val provider = AiProviderFactory.create(settings.currentProvider)
             CoroutineScope(Dispatchers.Main).launch {
                 try {
                     withContext(Dispatchers.IO) { provider.initialize(settings.getApiKeyFor(settings.currentProvider)) }
