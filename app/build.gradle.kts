@@ -43,7 +43,7 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.8.0")
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("com.github.barteksc:android-pdf-viewer:2.8.2")
+    implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     // PDF text extraction
