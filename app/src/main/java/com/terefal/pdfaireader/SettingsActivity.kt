@@ -11,6 +11,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import com.terefal.pdfaireader.ai.AiProviderFactory
 import com.terefal.pdfaireader.ai.ProviderType
+import androidx.lifecycle.lifecycleScope
 import com.terefal.pdfaireader.config.SettingsManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
