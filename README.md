@@ -40,13 +40,14 @@ pdf-ai-reader/
 ## Technologies Used
 
 - **Programming Language**: Kotlin
-- **Frameworks**: Jetpack Compose, Android ViewModel, Room
-- **PDF Library**: AndroidPdfViewer or MuPDF for rendering and interaction
+- **Frameworks**: Android ViewModel, Room, Kotlin Coroutines
+- **UI**: XML-based layouts with DrawerLayout for AI sidebar
+- **PDF Library**: AndroidPdfViewer for rendering, PDFBox for text extraction
 - **AI Integration**:
-  - [OpenAI API](https://openai.com/api/) for cloud-based AI features
-  - [Local LLMs](https://ollamalabs.com/) for offline modes
+  - [DeepSeek API](https://api.deepseek.com/) — 国内直连，推荐首选
+  - [OpenAI API](https://openai.com/api/) — 需代理
+  - [Ollama](https://ollama.com/) — 本地离线模型
 - **Database**: SQLite with Room ORM
-- **UI Design**: Jetpack Compose for modern UI interactions
 
 ---
 
@@ -99,14 +100,14 @@ pdf-ai-reader/
 
 ### Phase 1 (Current Target)
 - [x] Set up project structure
-- [ ] Implement basic PDF rendering and navigation
-- [ ] Develop AI-powered contextual sidebar (OpenAI API support)
-- [ ] Enable text/image-based screenshot querying
+- [x] Implement basic PDF rendering and navigation
+- [ ] Develop AI-powered contextual sidebar (DeepSeek/OpenAI/Ollama)
+- [ ] Enable text-based PDF content querying
 
 ### Phase 2
 - [ ] Build note-taking and organization features
-- [ ] Extend support for offline AI functionality
-- [ ] User settings for customizable AI prompts
+- [ ] User settings for customizable AI prompts and provider switching
+- [ ] Configure proxy support per provider
 
 ### Phase 3
 - [ ] Allow cloud-based note synchronization

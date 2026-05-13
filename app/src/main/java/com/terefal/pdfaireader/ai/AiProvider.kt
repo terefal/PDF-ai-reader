@@ -1,9 +1,7 @@
 package com.terefal.pdfaireader.ai
 
-/**
- * Abstract AiProvider interface for handling multiple AI models.
- */
 interface AiProvider {
-    fun initialize(apiKey: String): Boolean
-    fun askQuestion(question: String): String
+    val providerType: ProviderType
+    suspend fun initialize(apiKey: String): Boolean
+    suspend fun askQuestion(context: String, question: String): String
 }

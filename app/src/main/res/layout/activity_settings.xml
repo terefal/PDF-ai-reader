@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AI 模型设置"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:padding="8dp" />
+
+    <!-- Provider 选择 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择 AI 模型"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp" />
+
+    <Spinner
+        android:id="@+id/providerSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <!-- DeepSeek API Key -->
+    <TextView
+        android:id="@+id/deepseekLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DeepSeek API Key"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp" />
+
+    <EditText
+        android:id="@+id/deepseekKeyInput"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="sk-xxxxxxxxxxxxxxxx"
+        android:inputType="textPassword" />
+
+    <!-- OpenAI API Key -->
+    <TextView
+        android:id="@+id/openaiLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OpenAI API Key"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp" />
+
+    <EditText
+        android:id="@+id/openaiKeyInput"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="sk-xxxxxxxxxxxxxxxx"
+        android:inputType="textPassword" />
+
+    <!-- Ollama URL -->
+    <TextView
+        android:id="@+id/ollamaLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ollama 服务地址"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp" />
+
+    <EditText
+        android:id="@+id/ollamaUrlInput"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="http://localhost:11434"
+        android:inputType="textUri" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="24dp">
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="保存设置"
+            android:backgroundTint="#FF4CAF50" />
+
+        <Button
+            android:id="@+id/testButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="测试连接"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:padding="12dp"
+        android:gravity="center" />
+
+</LinearLayout>

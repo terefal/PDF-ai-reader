@@ -1,6 +1,6 @@
 package com.terefal.pdfaireader
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,26 +8,25 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.terefal.pdfaireader.ai.AiProvider
-import com.terefal.pdfaireader.ai.OpenAiProvider
+import com.terefal.pdfaireader.ai.SettingsActivity
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var filePickerLauncher: ActivityResultLauncher<Intent>
     private var selectedFileUri: Uri? = null
-    private lateinit var selectedAiProvider: AiProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialize AI provider (default to OpenAI)
-        selectedAiProvider = OpenAiProvider()
-
         // Button to choose PDF
-        val openPdfButton: Button = findViewById(R.id.openPdfButton)
-        openPdfButton.setOnClickListener {
+        findViewById<Button>(R.id.openPdfButton).setOnClickListener {
             openFilePicker()
+        }
+
+        // Button to open settings
+        findViewById<Button>(R.id.settingsButton).setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
 
         // Setup file picker launcher
