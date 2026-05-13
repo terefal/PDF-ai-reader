@@ -1,5 +1,6 @@
 package com.terefal.pdfaireader
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.net.Uri
