@@ -43,7 +43,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "pdf_ai_reader_db"
-                ).addMigrations(MIGRATION_2_3).build().also { INSTANCE = it }
+                ).addMigrations(MIGRATION_2_3).fallbackToDestructiveMigration().build().also { INSTANCE = it }
             }
         }
     }

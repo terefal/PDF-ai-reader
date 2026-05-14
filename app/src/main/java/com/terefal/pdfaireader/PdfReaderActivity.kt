@@ -227,10 +227,13 @@ class PdfReaderActivity : AppCompatActivity() {
     }
 
     private fun openNoteBook(id: Long) {
-        currentNoteBookId = id
+        if (id == currentNoteBookId) return
         annotationCollectJob?.cancel()
+        val intent = android.content.Intent(this, PdfReaderActivity::class.java).apply {
+            putExtra(EXTRA_NOTEBOOK_ID, id)
+        }
+        startActivity(intent)
         finish()
-        startActivity(intent.apply { putExtra(EXTRA_NOTEBOOK_ID, id) })
     }
 
     private fun sendMessage() {
