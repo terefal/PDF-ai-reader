@@ -17,6 +17,9 @@ interface NoteDao {
     @Insert
     suspend fun insert(note: Note): Long
 
+    @Query("SELECT * FROM notes WHERE noteBookId = :noteBookId ORDER BY timestamp DESC")
+    fun getNotesForNoteBook(noteBookId: Long): Flow<List<Note>>
+
     @Delete
     suspend fun delete(note: Note)
 }

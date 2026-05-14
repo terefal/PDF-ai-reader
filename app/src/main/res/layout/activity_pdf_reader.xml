@@ -10,46 +10,118 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         android:background="#FFFFFF"
         android:elevation="1dp">
 
         <TextView
+            android:id="@+id/backButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:text="←"
+            android:textSize="18sp"
+            android:textColor="#0969DA"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+        <EditText
+            android:id="@+id/notebookTitleEdit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="PDF AI Reader"
-            android:textSize="16sp"
+            android:text="无标题笔记"
+            android:textSize="15sp"
             android:textColor="#1F2328"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="—"
-            android:textSize="12sp"
-            android:textColor="#656D76"
-            android:layout_marginEnd="8dp" />
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:background="@null"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp" />
 
         <TextView
             android:id="@+id/titlePageInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:textColor="#656D76" />
 
     </LinearLayout>
 
-    <!-- 分屏：PDF 区 + AI 侧边栏 -->
+    <!-- 分屏：文件树 + PDF + AI -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <!-- 左：PDF 阅读区 -->
+        <!-- 左侧文件树 -->
+        <LinearLayout
+            android:id="@+id/fileTreePanel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.18"
+            android:orientation="vertical"
+            android:background="#F6F8FA">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/fileTreeToggle"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:text="☰"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="笔记"
+                    android:textSize="12sp"
+                    android:textColor="#656D76"
+                    android:textStyle="bold"
+                    android:layout_marginStart="4dp" />
+
+                <TextView
+                    android:id="@+id/newNoteButton"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:text="+"
+                    android:textSize="18sp"
+                    android:textColor="#0969DA"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless" />
+
+            </LinearLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#D0D7DE" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fileTreeRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#D0D7DE" />
+
+        <!-- PDF 阅读区 -->
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -66,7 +138,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <!-- 底部工具 chips -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,11 +151,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="✏️ 圈画"
-                    android:textSize="12sp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
+                    android:textSize="11sp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
                     android:textColor="#1F2328"
                     android:background="@drawable/chip_inactive"
                     android:clickable="true"
@@ -95,11 +166,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="🖍 标注"
-                    android:textSize="12sp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
+                    android:textSize="11sp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
                     android:textColor="#1F2328"
                     android:background="@drawable/chip_inactive"
                     android:clickable="true"
@@ -109,69 +180,57 @@
 
         </FrameLayout>
 
-        <!-- 分隔线 -->
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#D0D7DE" />
+        <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#D0D7DE" />
 
-        <!-- 右：AI 侧边栏（永久可见） -->
+        <!-- AI 侧边栏 -->
         <LinearLayout
-            android:layout_width="320dp"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="12dp"
+            android:padding="10dp"
             android:background="#F6F8FA">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="AI 助手"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="#1F2328"
-                android:gravity="start"
-                android:paddingBottom="8dp" />
+                android:paddingBottom="6dp" />
 
-            <!-- 联网搜索开关 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:paddingBottom="8dp">
+                android:paddingBottom="6dp">
 
                 <Switch
                     android:id="@+id/webSearchSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:scaleX="0.8"
-                    android:scaleY="0.8" />
+                    android:scaleX="0.75"
+                    android:scaleY="0.75" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="🌐 联网搜索"
-                    android:textSize="12sp"
+                    android:textSize="11sp"
                     android:textColor="#656D76"
-                    android:layout_marginStart="4dp" />
+                    android:layout_marginStart="2dp" />
 
             </LinearLayout>
 
-            <!-- 分隔线 -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#D0D7DE"
-                android:layout_marginBottom="8dp" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#D0D7DE" android:layout_marginBottom="6dp" />
 
-            <!-- 对话区 -->
             <ScrollView
                 android:id="@+id/chatScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:padding="4dp">
+                android:padding="3dp">
 
                 <LinearLayout
                     android:id="@+id/chatContainer"
@@ -181,14 +240,30 @@
 
             </ScrollView>
 
-            <!-- 加载指示器 -->
             <ProgressBar
                 android:id="@+id/loadingIndicator"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_gravity="center"
                 android:visibility="gone"
-                android:layout_margin="4dp" />
+                android:layout_margin="3dp" />
+
+            <!-- 上下文标签 -->
+            <HorizontalScrollView
+                android:id="@+id/contextTagScroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/contextTagContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="4dp" />
+
+            </HorizontalScrollView>
 
             <!-- 输入区 -->
             <LinearLayout
@@ -200,10 +275,10 @@
 
                 <TextView
                     android:id="@+id/imageButton"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:text="🖼"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:gravity="center"
                     android:clickable="true"
                     android:focusable="true"
@@ -215,26 +290,26 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="输入问题..."
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:textColor="#1F2328"
                     android:textColorHint="#8B949E"
-                    android:maxLines="4"
+                    android:maxLines="3"
                     android:inputType="textMultiLine"
                     android:background="@null"
-                    android:padding="4dp" />
+                    android:padding="3dp" />
 
                 <TextView
                     android:id="@+id/sendButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="发送"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     android:textColor="#FFFFFF"
                     android:background="@drawable/btn_primary"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
                     android:clickable="true"
                     android:focusable="true" />
 

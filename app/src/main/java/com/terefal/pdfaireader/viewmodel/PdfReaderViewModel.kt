@@ -32,7 +32,10 @@ class PdfReaderViewModel(application: Application) : AndroidViewModel(applicatio
     private var pdfUri: Uri? = null
     private var lastQuestion: String = ""
     private var lastAnswer: String = ""
+    private var noteBookId: Long = 0
     private val noteDao = AppDatabase.getInstance(application).noteDao()
+
+    fun setNoteBookId(id: Long) { this.noteBookId = id }
 
     fun initProvider(settings: SettingsManager) {
         val providerType = settings.currentProvider
@@ -94,6 +97,7 @@ class PdfReaderViewModel(application: Application) : AndroidViewModel(applicatio
             viewModelScope.launch {
                 noteDao.insert(
                     Note(
+                        noteBookId = noteBookId,
                         pdfUri = pdfUri?.toString() ?: "",
                         question = lastQuestion,
                         content = lastAnswer

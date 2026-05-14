@@ -29,4 +29,10 @@ interface AnnotationDao {
 
     @Query("UPDATE annotations SET text = :text WHERE id = :id")
     suspend fun updateText(id: Long, text: String)
+
+    @Query("SELECT * FROM annotations WHERE noteBookId = :noteBookId ORDER BY pageNumber, rectTop")
+    fun getAnnotationsForNoteBook(noteBookId: Long): Flow<List<Annotation>>
+
+    @Query("SELECT * FROM annotations WHERE noteBookId = :noteBookId AND pageNumber = :pageNumber ORDER BY rectTop")
+    fun getAnnotationsForNoteBookPage(noteBookId: Long, pageNumber: Int): Flow<List<Annotation>>
 }

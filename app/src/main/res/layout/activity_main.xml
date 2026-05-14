@@ -5,14 +5,14 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="#F6F8FA"
-    android:padding="32dp">
+    android:padding="24dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/card_bg"
-        android:padding="32dp"
+        android:padding="28dp"
         android:gravity="center"
         android:elevation="2dp">
 
@@ -28,22 +28,36 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AI 驱动的智能 PDF 阅读助手"
+            android:text="AI 驱动的智能笔记系统"
             android:textSize="13sp"
             android:textColor="#656D76"
-            android:layout_marginBottom="32dp" />
+            android:layout_marginBottom="28dp" />
 
         <TextView
-            android:id="@+id/openPdfButton"
+            android:id="@+id/newNoteButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="📂 选择并打开 PDF"
+            android:text="✏️ 新建空白笔记"
             android:textSize="15sp"
             android:textColor="#FFFFFF"
             android:background="@drawable/btn_primary"
             android:gravity="center"
             android:padding="14dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/importPdfButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📂 导入 PDF 为笔记"
+            android:textSize="15sp"
+            android:textColor="#1F2328"
+            android:background="@drawable/btn_outline"
+            android:gravity="center"
+            android:padding="14dp"
+            android:layout_marginBottom="10dp"
             android:clickable="true"
             android:focusable="true" />
 
@@ -63,11 +77,30 @@
     </LinearLayout>
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="📋 最近笔记"
+        android:textSize="13sp"
+        android:textColor="#656D76"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="8dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recentNotesList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/card_bg"
+        android:padding="4dp"
+        android:clipToPadding="false" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="v1.0 · terefal"
+        android:text="v2.0 · terefal"
         android:textSize="11sp"
         android:textColor="#8B949E"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="12dp" />
 
 </LinearLayout>

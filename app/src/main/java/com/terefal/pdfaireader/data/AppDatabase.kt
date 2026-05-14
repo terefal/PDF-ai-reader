@@ -7,33 +7,33 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [Note::class, Annotation::class], version = 2, exportSchema = false)
+@Database(entities = [Note::class, Annotation::class, NoteBook::class], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun noteDao(): NoteDao
     abstract fun annotationDao(): AnnotationDao
+    abstract fun noteBookDao(): NoteBookDao
 
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
-        private val MIGRATION_1_2 = object : Migration(1, 2) {
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("""
-                    CREATE TABLE IF NOT EXISTS annotations (
+                    CREATE TABLE IF NOT EXISTS notebooks (
                         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-                        pdfUri TEXT NOT NULL,
-                        pageNumber INTEGER NOT NULL,
-                        rectLeft REAL NOT NULL,
-                        rectTop REAL NOT NULL,
-                        rectRight REAL NOT NULL,
-                        rectBottom REAL NOT NULL,
-                        color INTEGER NOT NULL DEFAULT 0x40FFEB3B,
-                        type TEXT NOT NULL DEFAULT 'highlight',
-                        text TEXT NOT NULL DEFAULT '',
-                        timestamp INTEGER NOT NULL DEFAULT 0
+                        title TEXT NOT NULL,
+                        pdfUri TEXT,
+                        pdfFileName TEXT,
+                        previewText TEXT,
+                        pageCount INTEGER NOT NULL DEFAULT 0,
+                        createdAt INTEGER NOT NULL DEFAULT 0,
+                        updatedAt INTEGER NOT NULL DEFAULT 0
                     )
                 """)
+                db.execSQL("ALTER TABLE notes ADD COLUMN noteBookId INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE annotations ADD COLUMN noteBookId INTEGER NOT NULL DEFAULT 0")
             }
         }
 
@@ -43,7 +43,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "pdf_ai_reader_db"
-                ).addMigrations(MIGRATION_1_2).build().also { INSTANCE = it }
+                ).addMigrations(MIGRATION_2_3).build().also { INSTANCE = it }
             }
         }
     }
