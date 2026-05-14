@@ -25,7 +25,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.github.barteksc.pdfviewer.PDFView
-import com.github.barteksc.pdfviewer.listener.OnPageChangeListener
 import com.terefal.pdfaireader.ai.ChatImage
 import com.terefal.pdfaireader.config.SettingsManager
 import com.terefal.pdfaireader.data.Annotation
@@ -107,12 +106,12 @@ class PdfReaderActivity : AppCompatActivity() {
         }
         overlayContainer.addView(annotationOverlay)
 
-        // Page change listener for annotation overlay
-        pdfView.setOnPageChangeListener(object : OnPageChangeListener {
-            override fun onPageChanged(page: Int, pageCount: Int) {
-                loadAnnotationsForPage(page)
+        // Load annotations when page scrolls (via post)
+        pdfView.post {
+            pdfView.setOnClickListener {
+                pdfView.currentPage.let { loadAnnotationsForPage(it) }
             }
-        })
+        }
 
         // Setup ViewModel
         viewModel = ViewModelProvider(this)[PdfReaderViewModel::class.java]
