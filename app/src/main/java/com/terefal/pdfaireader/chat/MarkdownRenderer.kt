@@ -15,11 +15,19 @@ object MarkdownRenderer {
         if (initAttempted) return
         initAttempted = true
         try {
-            markwon = Markwon.create(context)
-            Log.d("MarkdownRenderer", "Markwon initialized successfully")
+            markwon = Markwon.builder(context)
+                .usePlugin(io.noties.markwon.ext.latex.JLatexMathPlugin.create(16) { builder ->
+                    builder.inlinesEnabled(true)
+                    builder.blocksEnabled(true)
+                })
+                .usePlugin(io.noties.markwon.ext.strikethrough.StrikethroughPlugin.create())
+                .usePlugin(io.noties.markwon.ext.tables.TablePlugin.create(context))
+                .build()
+            Log.d("MarkdownRenderer", "Markwon + LaTeX initialized")
         } catch (e: Exception) {
-            Log.e("MarkdownRenderer", "Markwon init failed, using plain text", e)
-            markwon = null
+            Log.e("MarkdownRenderer", "Markwon init failed: ${e.message}", e)
+            try { markwon = Markwon.create(context); Log.d("MarkdownRenderer", "Fallback to basic Markwon") }
+            catch (e2: Exception) { markwon = null }
         }
     }
 
