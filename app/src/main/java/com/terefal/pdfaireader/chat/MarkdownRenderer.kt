@@ -2,31 +2,24 @@ package com.terefal.pdfaireader.chat
 
 import android.content.Context
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.widget.TextView
 import io.noties.markwon.Markwon
-import io.noties.markwon.ext.latex.JLatexMathPlugin
-import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
-import io.noties.markwon.ext.tables.TablePlugin
-import io.noties.markwon.html.HtmlPlugin
 
 object MarkdownRenderer {
 
     private var markwon: Markwon? = null
+    private var initAttempted = false
 
     fun init(context: Context) {
-        if (markwon != null) return
+        if (initAttempted) return
+        initAttempted = true
         try {
-            markwon = Markwon.builder(context)
-                .usePlugin(JLatexMathPlugin.create(16f) { builder ->
-                    builder.inlinesEnabled(true)
-                    builder.blocksEnabled(true)
-                })
-                .usePlugin(StrikethroughPlugin.create())
-                .usePlugin(TablePlugin.create(context))
-                .usePlugin(HtmlPlugin.create())
-                .build()
+            markwon = Markwon.create(context)
+            Log.d("MarkdownRenderer", "Markwon initialized successfully")
         } catch (e: Exception) {
-            android.util.Log.e("MarkdownRenderer", "init failed", e)
+            Log.e("MarkdownRenderer", "Markwon init failed, using plain text", e)
+            markwon = null
         }
     }
 
@@ -37,7 +30,12 @@ object MarkdownRenderer {
             setPadding(12, 8, 12, 8)
             movementMethod = LinkMovementMethod.getInstance()
         }
-        markwon?.setMarkdown(tv, markdown) ?: tv.apply { text = markdown }
+        val mw = markwon
+        if (mw != null) {
+            mw.setMarkdown(tv, markdown)
+        } else {
+            tv.text = markdown
+        }
         return tv
     }
 }
