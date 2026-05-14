@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,9 +20,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<Button>(R.id.openPdfButton).setOnClickListener { openFilePicker() }
+        findViewById<TextView>(R.id.openPdfButton).setOnClickListener { openFilePicker() }
 
-        findViewById<Button>(R.id.settingsButton).setOnClickListener {
+        findViewById<TextView>(R.id.settingsButton).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 

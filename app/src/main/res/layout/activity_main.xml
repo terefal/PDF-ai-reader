@@ -4,28 +4,70 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="#F6F8FA"
     android:padding="32dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/card_bg"
+        android:padding="32dp"
+        android:gravity="center"
+        android:elevation="2dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📖 PDF AI Reader"
+            android:textSize="24sp"
+            android:textColor="#1F2328"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AI 驱动的智能 PDF 阅读助手"
+            android:textSize="13sp"
+            android:textColor="#656D76"
+            android:layout_marginBottom="32dp" />
+
+        <TextView
+            android:id="@+id/openPdfButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📂 选择并打开 PDF"
+            android:textSize="15sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/btn_primary"
+            android:gravity="center"
+            android:padding="14dp"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/settingsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⚙️ AI 模型设置"
+            android:textSize="15sp"
+            android:textColor="#1F2328"
+            android:background="@drawable/btn_outline"
+            android:gravity="center"
+            android:padding="14dp"
+            android:clickable="true"
+            android:focusable="true" />
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PDF AI Reader"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp" />
-
-    <Button
-        android:id="@+id/openPdfButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="选择并打开 PDF" />
-
-    <Button
-        android:id="@+id/settingsButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="AI 模型设置"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="#FF6200EE" />
+        android:text="v1.0 · terefal"
+        android:textSize="11sp"
+        android:textColor="#8B949E"
+        android:layout_marginTop="16dp" />
 
 </LinearLayout>

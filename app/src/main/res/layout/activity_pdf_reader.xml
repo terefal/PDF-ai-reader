@@ -1,169 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawerLayout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
 
-    <!-- 主内容区: PDF 阅读 -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.github.barteksc.pdfviewer.PDFView
-            android:id="@+id/pdfView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <!-- 选择高亮层 (动态添加) -->
-        <FrameLayout
-            android:id="@+id/overlayContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <!-- 底部工具按钮 -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:orientation="horizontal"
-            android:layout_margin="16dp">
-
-            <Button
-                android:id="@+id/toggleAiButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="AI 助手"
-                android:textSize="12sp"
-                android:minWidth="0dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp" />
-
-            <Button
-                android:id="@+id/circleSelectButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="圈画"
-                android:textSize="12sp"
-                android:minWidth="0dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:layout_marginStart="4dp" />
-
-            <Button
-                android:id="@+id/annotateButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="标注"
-                android:textSize="12sp"
-                android:minWidth="0dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:layout_marginStart="4dp" />
-
-        </LinearLayout>
-
-    </FrameLayout>
-
-    <!-- 右侧 AI 侧边栏 -->
+    <!-- 顶部标题栏 -->
     <LinearLayout
-        android:layout_width="320dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:orientation="vertical"
-        android:padding="12dp"
-        android:background="#FAFAFA">
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:background="#FFFFFF"
+        android:elevation="1dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="AI 助手"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:padding="8dp" />
+            android:layout_weight="1"
+            android:text="PDF AI Reader"
+            android:textSize="16sp"
+            android:textColor="#1F2328"
+            android:textStyle="bold" />
 
-        <!-- 联网搜索开关 -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="4dp">
+            android:text="—"
+            android:textSize="12sp"
+            android:textColor="#656D76"
+            android:layout_marginEnd="8dp" />
 
-            <Switch
-                android:id="@+id/webSearchSwitch"
+        <TextView
+            android:id="@+id/titlePageInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="12sp"
+            android:textColor="#656D76" />
+
+    </LinearLayout>
+
+    <!-- 分屏：PDF 区 + AI 侧边栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- 左：PDF 阅读区 -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#F0F0F0">
+
+            <com.github.barteksc.pdfviewer.PDFView
+                android:id="@+id/pdfView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <FrameLayout
+                android:id="@+id/overlayContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- 底部工具 chips -->
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/chip_group_bg">
+
+                <TextView
+                    android:id="@+id/circleChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="✏️ 圈画"
+                    android:textSize="12sp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:textColor="#1F2328"
+                    android:background="@drawable/chip_inactive"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <TextView
+                    android:id="@+id/annotateChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🖍 标注"
+                    android:textSize="12sp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:textColor="#1F2328"
+                    android:background="@drawable/chip_inactive"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <!-- 分隔线 -->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#D0D7DE" />
+
+        <!-- 右：AI 侧边栏（永久可见） -->
+        <LinearLayout
+            android:layout_width="320dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:background="#F6F8FA">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🌐 联网搜索"
-                android:textSize="12sp"
-                android:layout_marginStart="4dp" />
-
-        </LinearLayout>
-
-        <!-- 对话历史 -->
-        <ScrollView
-            android:id="@+id/chatScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="4dp">
-
-            <LinearLayout
-                android:id="@+id/chatContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:text="AI 助手"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#1F2328"
+                android:gravity="start"
+                android:paddingBottom="8dp" />
 
-        </ScrollView>
-
-        <!-- 加载指示器 -->
-        <ProgressBar
-            android:id="@+id/loadingIndicator"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center"
-            android:visibility="gone" />
-
-        <!-- 输入区 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="8dp">
-
-            <Button
-                android:id="@+id/imageButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:text="🖼"
-                android:textSize="18sp"
-                android:minWidth="0dp"
-                android:padding="0dp" />
-
-            <EditText
-                android:id="@+id/questionInput"
-                android:layout_width="0dp"
+            <!-- 联网搜索开关 -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="8dp">
+
+                <Switch
+                    android:id="@+id/webSearchSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🌐 联网搜索"
+                    android:textSize="12sp"
+                    android:textColor="#656D76"
+                    android:layout_marginStart="4dp" />
+
+            </LinearLayout>
+
+            <!-- 分隔线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#D0D7DE"
+                android:layout_marginBottom="8dp" />
+
+            <!-- 对话区 -->
+            <ScrollView
+                android:id="@+id/chatScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:hint="输入问题..."
-                android:maxLines="3"
-                android:inputType="textMultiLine" />
+                android:padding="4dp">
 
-            <Button
-                android:id="@+id/sendButton"
-                android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/chatContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+            </ScrollView>
+
+            <!-- 加载指示器 -->
+            <ProgressBar
+                android:id="@+id/loadingIndicator"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_margin="4dp" />
+
+            <!-- 输入区 -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="发送"
-                android:layout_marginStart="4dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/edittext_bg">
+
+                <TextView
+                    android:id="@+id/imageButton"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:text="🖼"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless" />
+
+                <EditText
+                    android:id="@+id/questionInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="输入问题..."
+                    android:textSize="14sp"
+                    android:textColor="#1F2328"
+                    android:textColorHint="#8B949E"
+                    android:maxLines="4"
+                    android:inputType="textMultiLine"
+                    android:background="@null"
+                    android:padding="4dp" />
+
+                <TextView
+                    android:id="@+id/sendButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="发送"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/btn_primary"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
 
-</androidx.drawerlayout.widget.DrawerLayout>
+</LinearLayout>
