@@ -93,7 +93,7 @@ class PdfReaderActivity : AppCompatActivity() {
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT
             )
-            isEnabled = false
+            isSelectionEnabled = false
             onSelectionComplete = { rect -> handleSelectionComplete(rect) }
         }
         overlayContainer.addView(selectionOverlay)
@@ -163,7 +163,7 @@ class PdfReaderActivity : AppCompatActivity() {
         findViewById<Button>(R.id.circleSelectButton).setOnClickListener {
             isCircleSelectMode = !isCircleSelectMode
             isAnnotationMode = false
-            selectionOverlay.isEnabled = isCircleSelectMode
+            selectionOverlay.isSelectionEnabled = isCircleSelectMode
             findViewById<Button>(R.id.circleSelectButton).apply {
                 setBackgroundColor(if (isCircleSelectMode) Color.parseColor("#FF4080FF") else Color.parseColor("#FFD6D6D6"))
             }
@@ -177,7 +177,7 @@ class PdfReaderActivity : AppCompatActivity() {
         findViewById<Button>(R.id.annotateButton).setOnClickListener {
             isAnnotationMode = !isAnnotationMode
             isCircleSelectMode = false
-            selectionOverlay.isEnabled = isAnnotationMode  // share overlay for annotation selection too
+            selectionOverlay.isSelectionEnabled = isAnnotationMode  // share overlay for annotation selection too
             findViewById<Button>(R.id.annotateButton).apply {
                 setBackgroundColor(if (isAnnotationMode) Color.parseColor("#FF4080FF") else Color.parseColor("#FFD6D6D6"))
             }

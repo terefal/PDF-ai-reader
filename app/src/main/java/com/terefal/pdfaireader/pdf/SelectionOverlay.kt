@@ -27,11 +27,11 @@ class SelectionOverlay(context: Context, private val pdfView: PDFView) : View(co
     private var endY = 0f
     private var isSelecting = false
 
-    var isEnabled = false
+    var isSelectionEnabled = false
     var onSelectionComplete: ((android.graphics.Rect) -> Unit)? = null
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (!isEnabled) return false
+        if (!isSelectionEnabled) return false
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
