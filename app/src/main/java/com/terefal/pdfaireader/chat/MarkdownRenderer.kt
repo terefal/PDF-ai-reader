@@ -15,15 +15,19 @@ object MarkdownRenderer {
 
     fun init(context: Context) {
         if (markwon != null) return
-        markwon = Markwon.builder(context)
-            .usePlugin(JLatexMathPlugin.create(16f) { builder ->
-                builder.inlinesEnabled(true)
-                builder.blocksEnabled(true)
-            })
-            .usePlugin(StrikethroughPlugin.create())
-            .usePlugin(TablePlugin.create(context))
-            .usePlugin(HtmlPlugin.create())
-            .build()
+        try {
+            markwon = Markwon.builder(context)
+                .usePlugin(JLatexMathPlugin.create(16f) { builder ->
+                    builder.inlinesEnabled(true)
+                    builder.blocksEnabled(true)
+                })
+                .usePlugin(StrikethroughPlugin.create())
+                .usePlugin(TablePlugin.create(context))
+                .usePlugin(HtmlPlugin.create())
+                .build()
+        } catch (e: Exception) {
+            android.util.Log.e("MarkdownRenderer", "init failed", e)
+        }
     }
 
     fun createRenderedView(context: Context, markdown: String): TextView {
