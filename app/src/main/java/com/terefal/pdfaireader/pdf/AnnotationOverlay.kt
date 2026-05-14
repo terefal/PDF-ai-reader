@@ -8,6 +8,7 @@ import android.graphics.RectF
 import android.view.View
 import com.github.barteksc.pdfviewer.PDFView
 import com.terefal.pdfaireader.data.Annotation
+import com.terefal.pdfaireader.data.AnnotationType
 
 class AnnotationOverlay(context: Context, private val pdfView: PDFView) : View(context) {
 
@@ -59,17 +60,16 @@ class AnnotationOverlay(context: Context, private val pdfView: PDFView) : View(c
             val rect = RectF(left, top, right, bottom)
 
             when (ann.type) {
-                "highlight" -> {
+                AnnotationType.HIGHLIGHT -> {
                     highlightPaint.color = ann.color
                     canvas.drawRect(rect, highlightPaint)
                 }
-                "underline" -> {
+                AnnotationType.UNDERLINE -> {
                     underlinePaint.color = ann.color
                     val y = bottom - 2f
                     canvas.drawLine(rect.left, y, rect.right, y, underlinePaint)
                 }
-                "note" -> {
-                    // Draw a small indicator icon (orange dot + yellow highlight)
+                AnnotationType.NOTE -> {
                     highlightPaint.color = 0x40FFEB3B.toInt()
                     canvas.drawRect(rect, highlightPaint)
                     canvas.drawCircle(rect.left + 8f, rect.top + 8f, 8f, noteIndicatorPaint)

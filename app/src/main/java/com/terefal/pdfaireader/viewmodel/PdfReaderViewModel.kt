@@ -32,8 +32,6 @@ class PdfReaderViewModel(application: Application) : AndroidViewModel(applicatio
     private var pdfUri: Uri? = null
     private var lastQuestion: String = ""
     private var lastAnswer: String = ""
-    var pendingImages: List<ChatImage> = emptyList()
-
     private val noteDao = AppDatabase.getInstance(application).noteDao()
 
     fun initProvider(settings: SettingsManager) {
@@ -63,7 +61,6 @@ class PdfReaderViewModel(application: Application) : AndroidViewModel(applicatio
         if (question.isBlank()) return
 
         lastQuestion = question
-        pendingImages = emptyList()
         _isLoading.value = true
         viewModelScope.launch {
             try {

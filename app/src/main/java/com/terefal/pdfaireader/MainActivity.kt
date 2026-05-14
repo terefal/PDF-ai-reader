@@ -20,23 +20,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Button to choose PDF
-        findViewById<Button>(R.id.openPdfButton).setOnClickListener {
-            openFilePicker()
-        }
+        findViewById<Button>(R.id.openPdfButton).setOnClickListener { openFilePicker() }
 
-        // Button to open settings
         findViewById<Button>(R.id.settingsButton).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
-        // Setup file picker launcher
         filePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                 selectedFileUri = result.data?.data
                 selectedFileUri?.let {
                     val intent = Intent(this, PdfReaderActivity::class.java).apply {
-                        putExtra("PDF_URI", it.toString())
+                        putExtra(PdfReaderActivity.EXTRA_PDF_URI, it.toString())
                     }
                     startActivity(intent)
                 } ?: Toast.makeText(this, "No PDF selected", Toast.LENGTH_SHORT).show()

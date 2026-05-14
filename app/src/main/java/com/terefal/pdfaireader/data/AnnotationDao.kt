@@ -26,4 +26,7 @@ interface AnnotationDao {
 
     @Query("DELETE FROM annotations WHERE id = :id")
     suspend fun deleteById(id: Long)
+
+    @Query("UPDATE annotations SET text = :text WHERE id = :id")
+    suspend fun updateText(id: Long, text: String)
 }
