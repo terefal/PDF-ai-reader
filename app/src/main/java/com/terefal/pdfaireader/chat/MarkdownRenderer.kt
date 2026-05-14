@@ -15,23 +15,15 @@ object MarkdownRenderer {
         if (initAttempted) return
         initAttempted = true
         try {
-            markwon = Markwon.builder(context)
-                .usePlugin(io.noties.markwon.ext.latex.JLatexMathPlugin.create(16f) { builder ->
-                    builder.inlinesEnabled(true)
-                    builder.blocksEnabled(true)
-                })
-                .usePlugin(io.noties.markwon.ext.strikethrough.StrikethroughPlugin.create())
-                .usePlugin(io.noties.markwon.ext.tables.TablePlugin.create(context))
-                .build()
-            Log.d("MarkdownRenderer", "Markwon + LaTeX initialized")
+            markwon = Markwon.create(context)
+            Log.d("MarkdownRenderer", "Markwon initialized")
         } catch (e: Exception) {
-            Log.e("MarkdownRenderer", "Markwon init failed: ${e.message}", e)
-            try { markwon = Markwon.create(context); Log.d("MarkdownRenderer", "Fallback to basic Markwon") }
-            catch (e2: Exception) { markwon = null }
+            Log.e("MarkdownRenderer", "Markwon init failed", e)
         }
     }
 
     fun createRenderedView(context: Context, markdown: String): TextView {
+        val processed = replaceLatexWithImages(markdown)
         val tv = TextView(context).apply {
             textSize = 13f
             setTextColor(0xFF1F2328.toInt())
@@ -40,10 +32,36 @@ object MarkdownRenderer {
         }
         val mw = markwon
         if (mw != null) {
-            mw.setMarkdown(tv, markdown)
+            mw.setMarkdown(tv, processed)
         } else {
-            tv.text = markdown
+            tv.text = processed
         }
         return tv
+    }
+
+    private fun replaceLatexWithImages(text: String): String {
+        var result = text
+        // Block math: $$...$$ → image
+        val blockRegex = Regex("""\$\$(.+?)\$\$""", RegexOption.DOT_MATCHES_ALL)
+        result = blockRegex.replace(result) { match ->
+            val formula = match.groupValues[1].trim()
+            val url = latexToUrl(formula, large = true)
+            "\n![]($url)\n"
+        }
+        // Inline math: $...$ → image
+        val inlineRegex = Regex("""\$(.+?)\$""")
+        result = inlineRegex.replace(result) { match ->
+            val formula = match.groupValues[1].trim()
+            val url = latexToUrl(formula, large = false)
+            "![]($url)"
+        }
+        return result
+    }
+
+    private fun latexToUrl(formula: String, large: Boolean): String {
+        val dpi = if (large) 200 else 150
+        val encoded = java.net.URLEncoder.encode(formula, "UTF-8")
+            .replace("+", "%20")
+        return "https://latex.codecogs.com/png.image?\\dpi{$dpi}\\bg{white}$encoded"
     }
 }
