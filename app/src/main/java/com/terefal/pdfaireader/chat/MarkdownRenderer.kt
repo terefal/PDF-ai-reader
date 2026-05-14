@@ -4,8 +4,6 @@ import android.content.Context
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.widget.TextView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.model.GlideUrl
 import io.noties.markwon.Markwon
 import io.noties.markwon.image.glide.GlideImagesPlugin
 

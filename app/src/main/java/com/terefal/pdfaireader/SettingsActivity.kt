@@ -25,6 +25,9 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var openaiKeyInput: EditText
     private lateinit var ollamaUrlInput: EditText
     private lateinit var statusText: TextView
+    private lateinit var deepseekLabel: TextView
+    private lateinit var openaiLabel: TextView
+    private lateinit var ollamaLabel: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +39,10 @@ class SettingsActivity : AppCompatActivity() {
         openaiKeyInput = findViewById(R.id.openaiKeyInput)
         ollamaUrlInput = findViewById(R.id.ollamaUrlInput)
         statusText = findViewById(R.id.statusText)
+        deepseekLabel = findViewById(R.id.deepseekLabel)
+        openaiLabel = findViewById(R.id.openaiLabel)
+        ollamaLabel = findViewById(R.id.ollamaLabel)
 
-        // Setup spinner
         val providers = ProviderType.values().map { it.displayName }
         providerSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, providers).also {
             it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -53,13 +58,11 @@ class SettingsActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        // Load saved values
         deepseekKeyInput.setText(settings.deepseekApiKey)
         openaiKeyInput.setText(settings.openaiApiKey)
         ollamaUrlInput.setText(settings.ollamaUrl)
         updateKeyVisibility(settings.currentProvider)
 
-        // Save button
         findViewById<Button>(R.id.saveButton).setOnClickListener {
             settings.deepseekApiKey = deepseekKeyInput.text.toString().trim()
             settings.openaiApiKey = openaiKeyInput.text.toString().trim()
@@ -67,7 +70,6 @@ class SettingsActivity : AppCompatActivity() {
             statusText.text = "设置已保存"
         }
 
-        // Test button
         findViewById<Button>(R.id.testButton).setOnClickListener {
             statusText.text = "测试中..."
             val provider = AiProviderFactory.create(settings.currentProvider)
@@ -87,12 +89,10 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun updateKeyVisibility(type: ProviderType) {
         deepseekKeyInput.visibility = if (type == ProviderType.DEEPSEEK) View.VISIBLE else View.GONE
-        findViewById<TextView>(R.id.deepseekLabel).visibility = deepseekKeyInput.visibility
-
+        deepseekLabel.visibility = deepseekKeyInput.visibility
         openaiKeyInput.visibility = if (type == ProviderType.OPENAI) View.VISIBLE else View.GONE
-        findViewById<TextView>(R.id.openaiLabel).visibility = openaiKeyInput.visibility
-
+        openaiLabel.visibility = openaiKeyInput.visibility
         ollamaUrlInput.visibility = if (type == ProviderType.OLLAMA) View.VISIBLE else View.GONE
-        findViewById<TextView>(R.id.ollamaLabel).visibility = ollamaUrlInput.visibility
+        ollamaLabel.visibility = ollamaUrlInput.visibility
     }
 }

@@ -3,7 +3,6 @@ package com.terefal.pdfaireader
 import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
@@ -108,7 +107,6 @@ class PdfReaderActivity : AppCompatActivity() {
 
         PdfTextExtractor.init(applicationContext)
 
-        // Load NoteBook from DB
         lifecycleScope.launch {
             val nb = withContext(Dispatchers.IO) { db.noteBookDao().getNoteBookById(currentNoteBookId) }
             if (nb != null) {
@@ -116,7 +114,8 @@ class PdfReaderActivity : AppCompatActivity() {
                 notebookTitleEdit.setText(nb.title)
                 if (!nb.pdfUri.isNullOrEmpty()) {
                     pdfUri = Uri.parse(nb.pdfUri)
-                    pdfView.fromUri(pdfUri!!).enableSwipe(true).swipeHorizontal(false).enableDoubletap(true).load()
+                    val u = pdfUri ?: return@launch
+                    pdfView.fromUri(u).enableSwipe(true).swipeHorizontal(false).enableDoubletap(true).load()
                     viewModel.loadPdf(contentResolver, pdfUri!!)
                 } else {
                     titlePageInfo.text = "空白笔记"
@@ -254,7 +253,8 @@ class PdfReaderActivity : AppCompatActivity() {
     }
 
     private fun setToolMode(circleSelect: Boolean, annotate: Boolean) {
-        isCircleSelectMode = circleSelect; isAnnotationMode = annotate
+        isCircleSelectMode = circleSelect
+        isAnnotationMode = annotate
         selectionOverlay.isSelectionEnabled = circleSelect || annotate
         fun applyChip(chip: TextView, active: Boolean) {
             chip.background = if (active) ContextCompat.getDrawable(this, R.drawable.chip_active) else ContextCompat.getDrawable(this, R.drawable.chip_inactive)
@@ -270,8 +270,9 @@ class PdfReaderActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 try {
                     val position = mapScreenToPdf(screenRect)
+                    val uri = pdfUri ?: throw IllegalStateException("No PDF loaded")
                     val text = withContext(Dispatchers.IO) {
-                        PdfTextExtractor.extractTextByArea(contentResolver, pdfUri!!, position.pageIndex + 1, position.pageRect)
+                        PdfTextExtractor.extractTextByArea(contentResolver, uri, position.pageIndex + 1, position.pageRect)
                     }
                     contextTagManager.addTag(ContextTag(
                         label = "第${position.pageIndex + 1}页",

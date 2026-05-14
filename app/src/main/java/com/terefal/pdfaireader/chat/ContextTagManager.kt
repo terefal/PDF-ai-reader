@@ -1,7 +1,6 @@
 package com.terefal.pdfaireader.chat
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import android.view.View

@@ -84,8 +84,9 @@ class PdfReaderViewModel(application: Application) : AndroidViewModel(applicatio
                 _aiResponse.value = response
                 lastAnswer = response
             } catch (e: Exception) {
-                _aiResponse.value = "[错误] ${e.message}"
-                lastAnswer = "[错误] ${e.message}"
+                val errMsg = "[错误] ${e.message}"
+                _aiResponse.value = errMsg
+                lastAnswer = errMsg
             } finally {
                 _isLoading.value = false
             }

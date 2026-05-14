@@ -11,7 +11,7 @@ class OllamaProvider : AiProvider {
 
     override val providerType: ProviderType = ProviderType.OLLAMA
     private var baseUrl: String = "http://localhost:11434"
-    private var modelName: String = "llama3"
+    private val modelName: String = "llama3"
 
     override suspend fun initialize(apiKey: String): Boolean = withContext(Dispatchers.IO) {
         if (apiKey.isNotBlank() && apiKey.startsWith("http")) {
