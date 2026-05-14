@@ -16,7 +16,7 @@ object MarkdownRenderer {
     fun init(context: Context) {
         if (markwon != null) return
         markwon = Markwon.builder(context)
-            .usePlugin(JLatexMathPlugin.create(context.resources.displayMetrics.density.toInt()) { builder ->
+            .usePlugin(JLatexMathPlugin.create(16f) { builder ->
                 builder.inlinesEnabled(true)
                 builder.blocksEnabled(true)
             })
