@@ -16,7 +16,7 @@ object MarkdownRenderer {
         initAttempted = true
         try {
             markwon = Markwon.builder(context)
-                .usePlugin(io.noties.markwon.ext.latex.JLatexMathPlugin.create(16) { builder ->
+                .usePlugin(io.noties.markwon.ext.latex.JLatexMathPlugin.create(16f) { builder ->
                     builder.inlinesEnabled(true)
                     builder.blocksEnabled(true)
                 })
