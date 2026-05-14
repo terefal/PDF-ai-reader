@@ -4,7 +4,10 @@ import android.content.Context
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
 import io.noties.markwon.Markwon
+import io.noties.markwon.image.glide.GlideImagesPlugin
 
 object MarkdownRenderer {
 
@@ -15,10 +18,13 @@ object MarkdownRenderer {
         if (initAttempted) return
         initAttempted = true
         try {
-            markwon = Markwon.create(context)
-            Log.d("MarkdownRenderer", "Markwon initialized")
+            markwon = Markwon.builder(context)
+                .usePlugin(GlideImagesPlugin.create(context))
+                .build()
+            Log.d("MarkdownRenderer", "Markwon + GlideImages initialized")
         } catch (e: Exception) {
-            Log.e("MarkdownRenderer", "Markwon init failed", e)
+            Log.e("MarkdownRenderer", "Markwon init failed: ${e.message}", e)
+            try { markwon = Markwon.create(context) } catch (e2: Exception) { markwon = null }
         }
     }
 
